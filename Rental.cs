@@ -1,22 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace VideoRental
+﻿namespace VideoRental
 {
-  public class Rental
-  {
-    public Rental(Movie movie, int daysRented)
+    public class Rental
     {
-        rentedMovie = movie;
-        nDaysRented = daysRented;
+        public Rental(Movie movie, int daysRented)
+        {
+            RentedMovie = movie;
+            DaysRented = daysRented;
+        }
+
+        private Movie RentedMovie;
+        private int DaysRented;
+
+        public Movie GetMovie()
+        {
+            return RentedMovie;
+        }
+        public void SetMovie(Movie movie)
+        {
+            RentedMovie = movie;
+        }
+
+        public int GetDaysRented()
+        {
+            return DaysRented;
+        }
+        public void SetDaysRented(int daysRented)
+        {
+            DaysRented = daysRented;
+        }
     }
-
-    public int getDaysRented() { return nDaysRented; }
-    public Movie getMovie() { return rentedMovie; }
-
-    private Movie rentedMovie;
-    private int nDaysRented;
-  }
 }

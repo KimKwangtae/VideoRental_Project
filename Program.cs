@@ -18,15 +18,15 @@ namespace VideoRental
             Movie exampleGenre = new Movie("새로운장르 1", Movie.EXAMPLE_GENRE);
             Customer customer = new Customer("고객");
 
-            customer.addRental(new Rental( regular1, 2 ));
-            customer.addRental(new Rental( regular2, 3 ));
-            customer.addRental(new Rental( newRelease1, 1 ));
-            customer.addRental(new Rental( newRelease2, 2 ));
-            customer.addRental(new Rental( children1, 3 ));
-            customer.addRental(new Rental( children2, 4 ));
-            customer.addRental(new Rental(exampleGenre, 1));
+            customer.AddRental(new Rental( regular1, 2 ));
+            customer.AddRental(new Rental( regular2, 3 ));
+            customer.AddRental(new Rental( newRelease1, 1 ));
+            customer.AddRental(new Rental( newRelease2, 2 ));
+            customer.AddRental(new Rental( children1, 3 ));
+            customer.AddRental(new Rental( children2, 4 ));
+            customer.AddRental(new Rental(exampleGenre, 1));
 
-            Console.Write(customer.statement());
+            Console.Write(customer.GetStatement());
         }
     }
 }

@@ -10,22 +10,41 @@
 
         public Movie(string title, int priceCode = REGULAR)
         {
-            movieTitle = title;
-            moviePriceCode = priceCode;
+            Title = title;
+            PriceCode = priceCode;
         }
 
-        public int getPriceCode() { return moviePriceCode; }
-        public double getPrice() { return moviePrice; }
+        private string Title=null;
+        private int PriceCode =0;
+        private double RentalPrice =0;
 
-        public void setPriceCode(int args) { moviePriceCode = args; }
+        public string GetTitle()
+        {
+            return Title;
+        }
+        public void SetTitle(string title)
+        {
+            Title = title;
+        }
 
-        public void setPrice(double args) { moviePrice = args; }
+        public int GetPriceCode() 
+        { 
+            return PriceCode; 
+        }
+        public void SetPriceCode(int priceCode)
+        {
+            PriceCode = priceCode;
+        }
 
+        public double GetRentalPrice()
+        { 
+            return RentalPrice; 
+        }
+        public void SetRentalPrice(double rentalPrice)
+        {
+            RentalPrice = rentalPrice;
+        }
+     
 
-        public string getTitle() { return movieTitle; }
-
-        private string movieTitle;
-        int moviePriceCode;
-        double moviePrice; 
     }
 }

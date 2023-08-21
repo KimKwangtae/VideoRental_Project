@@ -1,70 +1,83 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace VideoRental
+﻿namespace VideoRental
 {
+    using System.Collections.Generic;
+    using System.Text;
+
     class Customer
     {
         public Customer(string name)
         {
-            customerName = name;
+            Name = name;
         }
 
-        public void addRental(Rental arg) { customerRental.Add(arg); }
-        public string getName() { return customerName; }
+        private string Name;
 
-        public string statement()
+        private List<Rental> Rentals = new List<Rental>();
+
+        public void AddRental(Rental rental)
+        {
+            Rentals.Add(rental); 
+        }
+
+        public string GetName() 
+        { 
+            return Name; 
+        }
+        public void SetName(string name)
+        {
+            Name = name;
+        }
+
+        public string GetStatement()
         {
             double totalAmount = 0.0;
             int frequentRenterPoints = 0;
             StringBuilder result = new StringBuilder();
 
-            result.AppendLine("Rental Record for" + getName());
+            result.AppendLine("Rental Record for" + GetName());
 
 
-            IEnumerator<Rental> enumerator = customerRental.GetEnumerator();
+            IEnumerator<Rental> enumerator = Rentals.GetEnumerator();
 
             for (; enumerator.MoveNext();)
             {
                 double thisAmount = 0.0;
                 Rental each = enumerator.Current;
 
-                switch (each.getMovie().getPriceCode())
+                switch (each.GetMovie().GetPriceCode())
                 {
                     case Movie.REGULAR:
                         thisAmount += 2.0;
-                        if (each.getDaysRented() > 2)
-                            thisAmount += (each.getDaysRented() - 2) * 1.5;
+                        if (each.GetDaysRented() > 2)
+                            thisAmount += (each.GetDaysRented() - 2) * 1.5;
                         break;
                     case Movie.NEW_RELEASE:
-                        thisAmount += each.getDaysRented() * 3;
+                        thisAmount += each.GetDaysRented() * 3;
                         break;
 
                     case Movie.CHILDRENS:
                         thisAmount += 1.5;
-                        if (each.getDaysRented() > 3)
-                            thisAmount += (each.getDaysRented() - 3) * 1.5;
+                        if (each.GetDaysRented() > 3)
+                            thisAmount += (each.GetDaysRented() - 3) * 1.5;
                         break;
                 }
-                each.getMovie().setPrice(thisAmount);
+                each.GetMovie().SetRentalPrice(thisAmount);
                 // Add frequent renter points
                 frequentRenterPoints++;
 
                 // Add bonus for a two day new release rental
-                if ((each.getMovie().getPriceCode() == Movie.NEW_RELEASE)
-                        && each.getDaysRented() > 1) frequentRenterPoints++;
+                if ((each.GetMovie().GetPriceCode() == Movie.NEW_RELEASE)
+                        && each.GetDaysRented() > 1) frequentRenterPoints++;
 
                 // Show figures for this rental
-                result.AppendLine("\t" + each.getMovie().getTitle() + "\t" + thisAmount.ToString());
+                result.AppendLine("\t" + each.GetMovie().GetTitle() + "\t" + thisAmount.ToString());
                 totalAmount += thisAmount;
             }
 
             result.AppendLine("Amount owed is " + totalAmount);
             result.AppendLine("You earned " + frequentRenterPoints + " frequent renter points");
 
-            foreach(var retal in customerRental)
+            foreach(var retal in Rentals)
             {
                 result.AppendLine(GetRentalInformation(retal));
             }
@@ -74,15 +87,14 @@ namespace VideoRental
         public string GetRentalInformation(Rental rental)
         {
             string returnInformation = null;
-            if(rental!=null&&rental.getMovie()!=null)
+            if(rental!=null&&rental.GetMovie()!=null)
             {
-                returnInformation = $"{rental.getMovie().getPriceCode()}\t {rental.getMovie().getTitle()}\t {rental.getDaysRented()} \t {rental.getMovie().getPrice()}"; 
+                returnInformation = $"{rental.GetMovie().GetPriceCode()}\t {rental.GetMovie().GetTitle()}\t {rental.GetDaysRented()} \t {rental.GetMovie().GetRentalPrice()}"; 
             }
 
             return returnInformation;
         }
 
-        private string customerName;
-        private List<Rental> customerRental = new List<Rental>();
+       
     }
 }
