@@ -18,32 +18,62 @@
 
         public void AddMovie(string title, Movie.EnumPriceCode priceCode)
         {
-            Movies.Add(new Movie(title, priceCode));
+            try
+            {
+                Movies.Add(new Movie(title, priceCode));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"VideoRentalShop.AddMovie() :An error occurred: {ex.Message}");
+            }
         }
         public void AddCustomer(string customerName)
         {
-            Customers.Add(new Customer(customerName));
+            try 
+            { 
+                Customers.Add(new Customer(customerName));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"VideoRentalShop.AddCustomer() :An error occurred: {ex.Message}");
+            }
         }
         public void AddRental(string customerName,string movieTitle,int daysRented)
         {
-            var customer=Customers.FirstOrDefault(c => c.GetName() == customerName);
-            var movie = Movies.FirstOrDefault(m => m.GetTitle() == movieTitle);
+            try
+            { 
+                var customer=Customers.FirstOrDefault(c => c.GetName() == customerName);
+                var movie = Movies.FirstOrDefault(m => m.GetTitle() == movieTitle);
 
-            if(customer!=null && movie !=null)
+                if(customer!=null && movie !=null)
+                {
+                    customer.AddRental(new Rental(movie, daysRented));
+                }
+            }
+            catch (Exception ex)
             {
-                customer.AddRental(new Rental(movie, daysRented));
+                Console.WriteLine($"VideoRentalShop.AddRental() :An error occurred: {ex.Message}");
             }
         }
 
         public string GetCustomerStatement(string customerName)
         {
             string returnStatement = "";
-            var customer = Customers.FirstOrDefault(c => c.GetName() == customerName);
-            if (customer != null )
+
+            try
             {
-                returnStatement= customer.GetStatement();
+                var customer = Customers.FirstOrDefault(c => c.GetName() == customerName);
+                if (customer != null )
+                {
+                    returnStatement= customer.GetStatement();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"VideoRentalShop.GetCustomerStatement() :An error occurred: {ex.Message}");
             }
             return returnStatement;
+
         }
     }
 }
