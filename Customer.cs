@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Text;
 
-    class Customer
+    public class Customer
     {
         public Customer(string name)
         {
@@ -46,16 +46,16 @@
 
                 switch (each.GetMovie().GetPriceCode())
                 {
-                    case Movie.REGULAR:
+                    case Movie.EnumPriceCode.REGULAR:
                         thisAmount += 2.0;
                         if (each.GetDaysRented() > 2)
                             thisAmount += (each.GetDaysRented() - 2) * 1.5;
                         break;
-                    case Movie.NEW_RELEASE:
+                    case Movie.EnumPriceCode.NEW_RELEASE:
                         thisAmount += each.GetDaysRented() * 3;
                         break;
 
-                    case Movie.CHILDRENS:
+                    case Movie.EnumPriceCode.CHILDRENS:
                         thisAmount += 1.5;
                         if (each.GetDaysRented() > 3)
                             thisAmount += (each.GetDaysRented() - 3) * 1.5;
@@ -66,7 +66,7 @@
                 frequentRenterPoints++;
 
                 // Add bonus for a two day new release rental
-                if ((each.GetMovie().GetPriceCode() == Movie.NEW_RELEASE)
+                if ((each.GetMovie().GetPriceCode() == Movie.EnumPriceCode.NEW_RELEASE)
                         && each.GetDaysRented() > 1) frequentRenterPoints++;
 
                 // Show figures for this rental

@@ -3,19 +3,21 @@
 
     public class Movie
     {
-        public const int REGULAR = 0;
-        public const int NEW_RELEASE = 1;
-        public const int CHILDRENS = 2;
-        public const int EXAMPLE_GENRE = 3; //새로운 장르 추가
-
-        public Movie(string title, int priceCode = REGULAR)
+        public enum EnumPriceCode
+        {
+            REGULAR = 0,
+            NEW_RELEASE = 1,
+            CHILDRENS = 2,
+            EXAMPLE_GENRE = 3
+        }
+        public Movie(string title, EnumPriceCode priceCode = EnumPriceCode.REGULAR)
         {
             Title = title;
             PriceCode = priceCode;
         }
 
         private string Title=null;
-        private int PriceCode =0;
+        private EnumPriceCode PriceCode = EnumPriceCode.REGULAR;
         private double RentalPrice =0;
 
         public string GetTitle()
@@ -27,11 +29,11 @@
             Title = title;
         }
 
-        public int GetPriceCode() 
+        public EnumPriceCode GetPriceCode() 
         { 
             return PriceCode; 
         }
-        public void SetPriceCode(int priceCode)
+        public void SetPriceCode(EnumPriceCode priceCode)
         {
             PriceCode = priceCode;
         }
