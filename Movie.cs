@@ -13,12 +13,12 @@
         public Movie(string title, EnumPriceCode priceCode = EnumPriceCode.REGULAR)
         {
             Title = title;
-            PriceCode = priceCode;
+            SetPriceCode(priceCode);
         }
 
         private string Title=null;
         private EnumPriceCode PriceCode = EnumPriceCode.REGULAR;
-        private double RentalPrice =0;
+        private IRentalPrice RentalPrice = null;
 
         public string GetTitle()
         {
@@ -36,17 +36,81 @@
         public void SetPriceCode(EnumPriceCode priceCode)
         {
             PriceCode = priceCode;
+            SetRentalPrice(priceCode);
         }
-
-        public double GetRentalPrice()
-        { 
-            return RentalPrice; 
-        }
-        public void SetRentalPrice(double rentalPrice)
+        public IRentalPrice GetRentalPrice()
         {
-            RentalPrice = rentalPrice;
+            return RentalPrice;
         }
-     
+        private void SetRentalPrice(EnumPriceCode priceCode)
+        {
+            switch (priceCode)
+            {
+                case EnumPriceCode.REGULAR:
+                    RentalPrice = new RegularPrice();
+                    break;
+                case EnumPriceCode.NEW_RELEASE:
+                    RentalPrice = new NewReleasePrice();
+                    break;
+                case EnumPriceCode.CHILDRENS:
+                    RentalPrice = new ChildrensPrice();
+                    break;
+                case EnumPriceCode.EXAMPLE_GENRE:
+                    RentalPrice = new ExampleGenrePrice();
+                    break;
+                default:
+                    break;
+            }
+        }
 
+    }
+
+    public interface IRentalPrice
+    {
+        double CalculatePrice(int daysRented);
+    }
+
+    public class RegularPrice : IRentalPrice
+    {
+        public double CalculatePrice(int daysRented)
+        {
+            double price = 2;
+            if (daysRented > 2)
+            {
+                price += (daysRented - 2) * 1.5;
+            }
+            return price;
+        }
+    }
+
+    public class NewReleasePrice : IRentalPrice
+    {
+        public double CalculatePrice(int daysRented)
+        {
+            return daysRented * 3;
+        }
+    }
+
+    public class ChildrensPrice : IRentalPrice
+    {
+        public double CalculatePrice(int daysRented)
+        {
+            double price = 1.5;
+            if (daysRented > 3)
+            {
+                price += (daysRented - 3) * 1.5;
+            }
+            return price;
+        }
+    }
+
+    public class ExampleGenrePrice : IRentalPrice
+    {
+        public double CalculatePrice(int daysRented)
+        {
+            double price = 1.5 * daysRented;
+          
+            return price;
+        }
     }
 }

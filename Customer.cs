@@ -37,40 +37,20 @@
             result.AppendLine("Rental Record for" + GetName());
 
 
-            IEnumerator<Rental> enumerator = Rentals.GetEnumerator();
-
-            for (; enumerator.MoveNext();)
+            foreach (var rental in Rentals)
             {
                 double thisAmount = 0.0;
-                Rental each = enumerator.Current;
 
-                switch (each.GetMovie().GetPriceCode())
-                {
-                    case Movie.EnumPriceCode.REGULAR:
-                        thisAmount += 2.0;
-                        if (each.GetDaysRented() > 2)
-                            thisAmount += (each.GetDaysRented() - 2) * 1.5;
-                        break;
-                    case Movie.EnumPriceCode.NEW_RELEASE:
-                        thisAmount += each.GetDaysRented() * 3;
-                        break;
-
-                    case Movie.EnumPriceCode.CHILDRENS:
-                        thisAmount += 1.5;
-                        if (each.GetDaysRented() > 3)
-                            thisAmount += (each.GetDaysRented() - 3) * 1.5;
-                        break;
-                }
-                each.GetMovie().SetRentalPrice(thisAmount);
+               
                 // Add frequent renter points
                 frequentRenterPoints++;
 
                 // Add bonus for a two day new release rental
-                if ((each.GetMovie().GetPriceCode() == Movie.EnumPriceCode.NEW_RELEASE)
-                        && each.GetDaysRented() > 1) frequentRenterPoints++;
+                if ((rental.GetMovie().GetPriceCode() == Movie.EnumPriceCode.NEW_RELEASE)
+                        && rental.GetDaysRented() > 1) frequentRenterPoints++;
 
                 // Show figures for this rental
-                result.AppendLine("\t" + each.GetMovie().GetTitle() + "\t" + thisAmount.ToString());
+                result.AppendLine("\t" + rental.GetMovie().GetTitle() + "\t" + rental.GetRentalPrice());
                 totalAmount += thisAmount;
             }
 
@@ -89,7 +69,7 @@
             string returnInformation = null;
             if(rental!=null&&rental.GetMovie()!=null)
             {
-                returnInformation = $"{rental.GetMovie().GetPriceCode()}\t {rental.GetMovie().GetTitle()}\t {rental.GetDaysRented()} \t {rental.GetMovie().GetRentalPrice()}"; 
+                returnInformation = $"{rental.GetMovie().GetPriceCode()}\t {rental.GetMovie().GetTitle()}\t {rental.GetDaysRented()} \t {rental.GetRentalPrice()}"; 
             }
 
             return returnInformation;

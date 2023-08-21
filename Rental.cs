@@ -28,5 +28,9 @@
         {
             DaysRented = daysRented;
         }
+        public double GetRentalPrice()
+        {
+            return RentedMovie.GetRentalPrice().CalculatePrice(DaysRented);
+        }
     }
 }
