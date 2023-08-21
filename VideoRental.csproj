@@ -68,5 +68,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rental.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="CodeProblemDescription.json" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
